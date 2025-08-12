@@ -2,7 +2,7 @@
   "name": "chester",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,8 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "mongoose": "^5.10.2",
-    "node-telegram-bot-api": "^0.50.0"
+    "dotenv": "^16.0.0",
+    "mongoose": "^7.0.0",
+    "node-telegram-bot-api": "^0.61.0"
   }
 }
