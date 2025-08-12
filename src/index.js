@@ -1,12 +1,36 @@
-const { initHandler } = require('./handlers/main.js')
+require('dotenv').config();
+const mongoose = require('mongoose');
+const TelegramBot = require('node-telegram-bot-api');
 
-const http = require('http')
-const port = (process.env.PORT || 8080)
+// ================= VARIÁVEIS DE AMBIENTE =================
+const token = process.env.TELEGRAM_API;
+const dbString = process.env.DB_STRING;
 
-initHandler()
+if (!token) {
+    console.error("❌ ERRO: TELEGRAM_API não configurado!");
+    process.exit(1);
+}
 
-const server = http.createServer((request, reponse) => {
-    response.writeHead(200, { 'content-type' : 'aplication/json' })
+if (!dbString) {
+    console.error("❌ ERRO: DB_STRING não configurado!");
+    process.exit(1);
+}
+
+// ================= CONEXÃO AO MONGODB =================
+mongoose.connect(dbString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
+.then(() => console.log("✅ Conectado ao MongoDB"))
+.catch(err => {
+    console.error("❌ Erro ao conectar no MongoDB:", err);
+    process.exit(1);
+});
 
-server.listen(port)
+// ================= INICIAR BOT =================
+const bot = new TelegramBot(token, { polling: true });
+
+bot.on('message', (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, `Olá ${msg.from.first_name}, seu bot está funcionando no Render!`);
+});
