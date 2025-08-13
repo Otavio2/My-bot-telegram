@@ -1,8 +1,12 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const http = require('http');
 
-// Importa o initHandler do Chester
-const { initHandler } = require('./handlers/main.js');
+// Garante que o bot seja carregado
+require('./bot');
+
+// Importa o initHandler (responsável por configurar eventos)
+const { initHandler } = require('./handlers/main');
 
 // ================= VARIÁVEIS DE AMBIENTE =================
 const token = process.env.TELEGRAM_API;
@@ -34,7 +38,6 @@ mongoose.connect(dbString, {
 });
 
 // ================= MANTER SERVIDOR VIVO NO RENDER =================
-const http = require('http');
 const port = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
