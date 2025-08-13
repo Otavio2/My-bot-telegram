@@ -1,6 +1,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const TelegramBot = require('node-telegram-bot-api');
+
+// Importa o initHandler do Chester
+const { initHandler } = require('./handlers/main.js');
 
 // ================= VARIÁVEIS DE AMBIENTE =================
 const token = process.env.TELEGRAM_API;
@@ -21,16 +23,25 @@ mongoose.connect(dbString, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log("✅ Conectado ao MongoDB"))
+.then(() => {
+    console.log("✅ Conectado ao MongoDB");
+    // Inicia o bot só depois da conexão
+    initHandler();
+})
 .catch(err => {
     console.error("❌ Erro ao conectar no MongoDB:", err);
     process.exit(1);
 });
 
-// ================= INICIAR BOT =================
-const bot = new TelegramBot(token, { polling: true });
+// ================= MANTER SERVIDOR VIVO NO RENDER =================
+const http = require('http');
+const port = process.env.PORT || 8080;
 
-bot.on('message', (msg) => {
-    const chatId = msg.chat.id;
-    bot.sendMessage(chatId, `Olá ${msg.from.first_name}, seu bot está funcionando no Render!`);
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'Bot está rodando!' }));
+});
+
+server.listen(port, () => {
+    console.log(`🌐 Servidor HTTP rodando na porta ${port}`);
 });
