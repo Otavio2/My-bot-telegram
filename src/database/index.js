@@ -1,16 +1,10 @@
-const mongoose = require('mongoose')
-const dotenv = require('dotenv')
+const mongoose = require('mongoose');
 
-dotenv.config()
-                                                                                                                                                                              
-mongoose.connect(process.env.DB_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+const MessageSchema = new mongoose.Schema({
+    message: String,
+    reply: [String]
+});
 
-const MessageModel = mongoose.model(
-    'Reply',
-    require('./models/message')
-)
+const MessageModel = mongoose.model('Message', MessageSchema);
 
-module.exports = { MessageModel }
+module.exports = { MessageModel };
