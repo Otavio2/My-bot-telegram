@@ -1,18 +1,14 @@
 {
-  "name": "chester",
+  "name": "meu-bot-telegram",
   "version": "1.0.0",
-  "description": "",
+  "description": "Bot do Telegram com MongoDB rodando no Render",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.0",
-    "mongoose": "^7.0.0",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.3.2",
     "node-telegram-bot-api": "^0.61.0"
   }
 }
