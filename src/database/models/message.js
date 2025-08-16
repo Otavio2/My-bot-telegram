@@ -1,15 +1,17 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose');
 
-const schema = new Schema({
-    message: {
-        unique: true,
-        required: true,
-        type: String
-    },
-    reply: {
-        type: Array,
-        trim: true
-    }
-})
-		
-module.exports = schema
+const MessageSchema = new Schema({
+  message: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  reply: {
+    type: [String], // array de strings
+    trim: true
+  }
+});
+
+const MessageModel = model('Message', MessageSchema);
+
+module.exports = { MessageModel };
